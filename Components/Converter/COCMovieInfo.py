@@ -53,7 +53,8 @@ class COCMovieInfo(MovieInfo):
 					if filesize > 0:
 						if filesize < 1000:
 							text = "%d MB" % filesize
-						text = "%d GB" % (filesize / 1024)
+						else:
+							text = "%d GB" % (filesize / 1024)
 		return text
 
 	text = property(getText)

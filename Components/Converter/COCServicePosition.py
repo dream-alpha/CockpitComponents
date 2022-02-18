@@ -80,7 +80,7 @@ class COCServicePosition(ServicePosition):
 					pos = self.length - self.position
 
 				pos = -pos if self.negate else pos
-				if self.type == self.length:
+				if self.type == self.TYPE_LENGTH:
 					sign = ""
 				else:
 					sign = "-" if pos < 0 else "+"

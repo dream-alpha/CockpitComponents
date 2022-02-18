@@ -21,28 +21,8 @@
 
 from Debug import logger
 from Version import VERSION
-from Plugins.Plugin import PluginDescriptor
-
-
-def autostart(reason, **__):
-	if reason == 0:  # startup
-		logger.info("+++ Version: %s starts...", VERSION)
-		logger.info("--- startup")
-	elif reason == 1:  # shutdown
-		logger.info("--- shutdown")
-	else:
-		logger.info("reason not handled: %s", reason)
 
 
 def Plugins(**__):
-	logger.info("+++ Plugins")
-	descriptors = []
-	descriptors.append(
-		PluginDescriptor(
-			where=[
-				PluginDescriptor.WHERE_AUTOSTART
-			],
-			fnc=autostart
-		)
-	)
-	return descriptors
+	logger.info("  +++ Version: %s starts...", VERSION)
+	return []

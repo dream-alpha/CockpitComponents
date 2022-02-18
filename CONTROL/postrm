@@ -4,7 +4,7 @@ if [ "$1" = "remove" ]; then
 	rm /usr/lib/enigma2/python/Components/Renderer/COC* > /dev/null 2>&1
 	rm /usr/lib/enigma2/python/Components/Converter/COC* > /dev/null 2>&1
 	rm /usr/lib/enigma2/python/Components/Sources/COC* > /dev/null 2>&1
-	echo "TimeshiftCockpit plugin removed successfully."
+	echo "CockpitComponents plugin removed successfully."
 else
 	find /usr/lib/enigma2/python/Plugins/SytemPlugins/CockpitComponents -type f -name "*.pyo" -exec rm -f {} \; > /dev/null 2>&1
 	find /usr/lib/enigma2/python/Plugins/Components/Renderer -type f -name "COC*.pyo" -exec rm -f {} \; > /dev/null 2>&1

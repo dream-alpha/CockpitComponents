@@ -22,9 +22,9 @@
 import os
 from enigma import ePixmap
 from enigma import eServiceReference
-from Components.config import config
 from Components.Renderer.Renderer import Renderer
 from Components.Sources.CurrentService import CurrentService
+from Components.config import config
 from Plugins.Extensions.MovieCockpit.MovieCoverUtils import getCoverPath
 from Plugins.Extensions.MovieCockpit.SkinUtils import getSkinPath
 
