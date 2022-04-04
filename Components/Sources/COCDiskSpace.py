@@ -1,7 +1,7 @@
 #!/usr/bin/python
-# coding=utf-8
+# encoding: utf-8
 #
-# Copyright (C) 2018-2022 by dream-alpha
+# Copyright (C) 2018-2022 dream-alpha
 #
 # In case of reuse of this source code please do not remove this copyright.
 #
@@ -19,31 +19,17 @@
 # <http://www.gnu.org/licenses/>.
 
 
-from Poll import Poll
 from Components.Element import cached
-from Components.Converter.Converter import Converter
+from Components.Sources.Source import Source
 
 
-class COCDiskSpaceInfo(Poll, Converter):
-	SPACEINFO = 0
-
-	def __init__(self, atype):
-		Converter.__init__(self, atype)
-		Poll.__init__(self)
-
-		self.type = self.SPACEINFO
-		self.poll_interval = 2500
-		self.poll_enabled = True
-
-	def doSuspend(self, suspended):
-		if suspended:
-			self.poll_enabled = False
-		else:
-			self.downstream_elements.changed((self.CHANGED_POLL,))
-			self.poll_enabled = True
+class COCDiskSpace(Source):
+	def __init__(self, player):
+		Source.__init__(self)
+		self.__player = player
 
 	@cached
-	def getText(self):
-		return self.source.space
+	def getDiskSpace(self):
+		return self.__player.getBookmarksSpaceInfo()
 
-	text = property(getText)
+	space = property(getDiskSpace)

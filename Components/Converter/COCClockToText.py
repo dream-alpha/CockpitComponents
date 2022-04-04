@@ -56,7 +56,7 @@ class COCClockToText(Converter):
 	def getText(self):
 		text = ""
 		time = self.source.time
-		if not(not time or time > 169735005176 or time < 11):
+		if time is not None:
 			if self.text_type == self.IN_MINUTES:
 				mins = time / 60
 				if time % 60 >= 30:

@@ -19,14 +19,8 @@
 # <http://www.gnu.org/licenses/>.
 
 
-import os
-from enigma import ePixmap
-from enigma import eServiceReference
+from enigma import ePixmap, gPixmapPtr
 from Components.Renderer.Renderer import Renderer
-from Components.Sources.CurrentService import CurrentService
-from Components.config import config
-from Plugins.Extensions.MovieCockpit.MovieCoverUtils import getCoverPath
-from Plugins.Extensions.MovieCockpit.SkinUtils import getSkinPath
 
 
 class COCCover(Renderer):
@@ -49,29 +43,9 @@ class COCCover(Renderer):
 		self.skinAttributes = attribs
 		return Renderer.applySkin(self, desktop, parent)
 
-	def getServicePath(self):
-		path = None
-		service_reference = self.source.service
-		if isinstance(self.source, CurrentService):
-			service_reference = self.source.navcore.getCurrentlyPlayingServiceReference()
-		if isinstance(service_reference, eServiceReference):
-			path = service_reference.getPath()
-		return path
-
 	def changed(self, what):
-		if config.plugins.moviecockpit.cover_show.value and self.instance is not None:
+		if self.instance is not None:
 			if what[0] != self.CHANGED_CLEAR:
-				service_path = self.getServicePath()
-				if service_path:
-					cover_path, backdrop_path, _info_path = getCoverPath(service_path)
-					if not os.path.exists(cover_path) and config.plugins.moviecockpit.cover_fallback.value:
-						cover_path = getSkinPath("images/no_cover.png")
-					if self.type == "backdrop":
-						pixmap_path = backdrop_path
-					else:
-						pixmap_path = cover_path
-					self.instance.setPixmapFromFile(pixmap_path)
-					if os.path.exists(pixmap_path) and os.path.isfile(service_path):
-						self.instance.show()
-					else:
-						self.instance.hide()
+				self.instance.setPixmap(self.source.cover)
+			else:
+				self.instance.setPixmap(gPixmapPtr())

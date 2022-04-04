@@ -56,6 +56,12 @@ class COCServicePosition(ServicePosition):
 	position = property(getPosition)
 
 	@cached
+	def getTime(self):
+		return self.getLength() / 90000
+
+	time = property(getTime)
+
+	@cached
 	def getText(self):
 		text = ""
 		pos = 0

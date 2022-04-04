@@ -32,6 +32,18 @@ class COCCurrentService(CurrentService):
 		return self.__player
 
 	@cached
+	def getInfo(self):
+		return self.service and self.__player and self.__player.getInfo()
+
+	info = property(getInfo)
+
+	@cached
+	def getEvent(self):
+		return self.service and self.__player and self.__player.getEvent()
+
+	event = property(getEvent)
+
+	@cached
 	def getCurrentService(self):
 		service = self.navcore.getCurrentService()
 		if service is not None:
