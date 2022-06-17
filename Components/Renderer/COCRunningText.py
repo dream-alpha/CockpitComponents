@@ -81,13 +81,13 @@ class COCRunningText(Renderer):
 	def postWidgetCreate(self, instance):
 		self.scroll_label = eLabel(instance)
 		self.__timer = eTimer()
-		self.__timer_conn = None
-		self.__timer_conn = self.__timer.timeout.connect(self.movingLoop)
+		self._timer_conn = None
+		self._timer_conn = self.__timer.timeout.connect(self.movingLoop)
 
 	def preWidgetRemove(self, _instance):
 		self.__timer.stop()
 		self.__timer = None
-		self.__timer_conn = None
+		self._timer_conn = None
 		self.scroll_label = None
 
 	def applySkin(self, desktop, screen):

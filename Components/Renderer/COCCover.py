@@ -19,8 +19,9 @@
 # <http://www.gnu.org/licenses/>.
 
 
-from enigma import ePixmap, gPixmapPtr
+from enigma import ePixmap, gPixmapPtr, ePicLoad
 from Components.Renderer.Renderer import Renderer
+from Components.AVSwitch import AVSwitch
 
 
 class COCCover(Renderer):
@@ -29,7 +30,6 @@ class COCCover(Renderer):
 	def __init__(self):
 		self.skinAttributes = None
 		Renderer.__init__(self)
-		self.type = "cover"
 
 	def destroy(self):
 		Renderer.destroy(self)
@@ -46,6 +46,19 @@ class COCCover(Renderer):
 	def changed(self, what):
 		if self.instance is not None:
 			if what[0] != self.CHANGED_CLEAR:
-				self.instance.setPixmap(self.source.cover)
+				cover = self.source.cover
+				if cover:
+					scale = AVSwitch().getFramebufferScale()
+					size = self.instance.size()
+					self.picload = ePicLoad()
+					self.picload_conn = self.picload.PictureData.connect(self.displayPixmapCallback)
+					self.picload.setPara((size.width(), size.height(), scale[0], scale[1], False, 1, "#ff000000"))
+					self.picload.startDecodeBuffer(bytearray(cover), len(cover), False)
+				else:
+					self.instance.setPixmap(gPixmapPtr())
 			else:
 				self.instance.setPixmap(gPixmapPtr())
+
+	def displayPixmapCallback(self, picinfo=None):
+		if self.picload and picinfo:
+			self.instance.setPixmap(self.picload.getData())

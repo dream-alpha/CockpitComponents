@@ -19,6 +19,7 @@
 # <http://www.gnu.org/licenses/>.
 
 
+from Plugins.SystemPlugins.CockpitComponents.__init__ import _
 from Converter import Converter
 from Components.Element import cached
 from Components.config import config
@@ -61,7 +62,7 @@ class COCClockToText(Converter):
 				mins = time / 60
 				if time % 60 >= 30:
 					mins += 1
-				text = "%d min" % mins
+				text = "%d " % mins + _("min")
 			elif self.text_type == self.AS_LENGTH:
 				text = "%d:%02d" % (time / 60, time % 60)
 			elif self.text_type == self.TIMESTAMP:

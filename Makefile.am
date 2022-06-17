@@ -1,1 +1,1 @@
-SUBDIRS = src Components
+SUBDIRS = src po Components
